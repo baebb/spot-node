@@ -28,11 +28,11 @@ app.get('/', function (req, res) {
 });
 
 app.get('/cat', function (req, res) {
-  res.send('You hit cat');
+  res.send(`cat does not know ${req.query.question}`);
 });
 
-app.post('/dog', function (req, res) {
-  res.send(`yooo ${req.user}`);
+app.post('/sayhello', function (req, res) {
+  res.send(`hello ${req.body.user}`);
 });
 
 //start a server on port 80 and log its start to our console
