@@ -35,6 +35,6 @@ app.get('/cat', function (req, res) {
 var server = app.listen(80, function () {
 
   var port = server.address().port;
-  console.log('Example app listening on port ', port);
+  console.log('Listening on port ', port);
 
 });
