@@ -31,6 +31,10 @@ app.get('/cat', function (req, res) {
   res.send('You hit cat');
 });
 
+app.post('/dog', function (req, res) {
+  res.send(`yooo ${req.user}`);
+});
+
 //start a server on port 80 and log its start to our console
 var server = app.listen(80, function () {
 
