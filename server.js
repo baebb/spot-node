@@ -48,9 +48,8 @@ app.get('/test', (req, res) => {
     .size('640x360')
     .autopad('black')
     .format('flv')
-    .on('error', (err) => {
-      console.log('An error occurred: ' + err.message);
-    })
+    .on('start', () => console.log("Started!"))
+    .on('error', (err) => console.log('An error occurred: ' + err.message))
     .on('end', () => console.log('finished processing!'))
     .save('rtmp://live-tyo.twitch.tv:1935/app/live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye');
   res.send('trying streaming');
