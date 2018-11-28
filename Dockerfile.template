@@ -5,7 +5,7 @@
 FROM resin/%%RESIN_MACHINE_NAME%%-alpine-node:8.5-slim
 
 RUN apk update && apk add --allow-untrusted \
-fswebcam v4l-utils libav-tools ffmpeg && \
+v4l-utils ffmpeg && \
 rm -rf /var/lib/apt/lists/*
 
 # Defines our working directory in container
