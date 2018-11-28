@@ -2,9 +2,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 
-var ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
+// var ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 var ffmpeg = require('fluent-ffmpeg');
-ffmpeg.setFfmpegPath(ffmpegPath);
+// ffmpeg.setFfmpegPath(ffmpegPath);
 
 
 // Module Dependencies
