@@ -36,7 +36,8 @@ app.get('/', function (req, res) {
 });
 
 app.get('/test', (req, res) => {
-  var streamVid = fs.createReadStream('./img/bunny.mp4');
+  // var streamVid = fs.createReadStream('./img/bunny.mp4');
+  var streamVid = './img/bunny.mp4';
 
   streamVid.on('error', function(err) {
     console.log(err);
