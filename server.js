@@ -1,10 +1,8 @@
 // NPM Dependencies
 var express = require('express');
 var bodyParser = require('body-parser');
-
-// var ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 var ffmpeg = require('fluent-ffmpeg');
-// ffmpeg.setFfmpegPath(ffmpegPath);
+var fs = require('fs');
 
 
 // Module Dependencies
@@ -38,21 +36,25 @@ app.get('/', function (req, res) {
 });
 
 app.get('/test', (req, res) => {
+  var streamURL = fs.createWriteStream('rtmp://live-tyo.twitch.tv:1935/app/live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye');
+
   var command = ffmpeg()
     .input('./img/bunny.mp4')
-    .inputFormat('mp4')
-    .native()
-    .fps(15)
-    .withNoAudio()
-    .videoBitrate('4500k')
-    .videoCodec('libx264')
-    .size('640x360')
-    .autopad('black')
-    .format('flv')
-    .on('start', () => console.log("Started!"))
+    .preset('flashvideo')
+    // .inputFormat('mp4')
+    // .native()
+    // .fps(15)
+    // .withNoAudio()
+    // .videoBitrate('4500k')
+    // .videoCodec('libx264')
+    // .size('640x360')
+    // .autopad('black')
+    // .format('flv')
+    .on('start', () => console.log('Started!'))
     .on('error', (err) => console.log('An error occurred: ' + err.message))
     .on('end', () => console.log('finished processing!'))
-    .save('rtmp://live-tyo.twitch.tv:1935/app/live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye');
+    // .save('rtmp://live-tyo.twitch.tv:1935/app/live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye');
+    .pipe(streamURL, { end: true });
   res.send('streaming');
 });
 

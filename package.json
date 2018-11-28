@@ -14,6 +14,7 @@
     "body-parser": "^1.18.3",
     "ejs": "*",
     "express": "*",
-    "fluent-ffmpeg": "*"
+    "fluent-ffmpeg": "*",
+    "fs": "0.0.1-security"
   }
 }
