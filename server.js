@@ -40,10 +40,10 @@ app.get('/', function (req, res) {
 app.get('/test', (req, res) => {
   var command = ffmpeg()
     .input('./img/bunny.mp4')
-    // .inputFormat('mp4')
+    .inputFormat('mp4')
     // .native()
     .fps(15)
-    // .videoCodec('libx264')
+    .videoCodec('libx264')
     .size('640x360')
     .autopad('black')
     .format('flv')
