@@ -15,6 +15,6 @@
     "express": "*",
     "node-webcam": "^0.4.6",
     "v4l2camera": "*",
-    "v4l2camera": "fluent-ffmpeg"
+    "fluent-ffmpeg": "*"
   }
 }
