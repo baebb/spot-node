@@ -50,7 +50,7 @@ app.get('/test', (req, res) => {
       console.log('An error occurred: ' + err.message);
     })
     .on('end', () => console.log('finished processing!'))
-    .pipe('rtmp://live-tyo.twitch.tv/app/live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye', {end:true});
+    .save('rtmp://live-tyo.twitch.tv:1935/app/live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye');
   res.send('trying streaming');
 });
 
