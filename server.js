@@ -1,5 +1,10 @@
+// NPM Dependencies
 var express = require('express');
 var bodyParser = require('body-parser');
+
+// Module Dependencies
+var catRoutes = require('./routes/cat');
+
 var app = express();
 
 // parse application/x-www-form-urlencoded
@@ -27,9 +32,7 @@ app.get('/', function (req, res) {
   res.render('index.html');
 });
 
-app.get('/cat', function (req, res) {
-  res.send(`cat does not know ${req.query.question}`);
-});
+app.use('/cat', catRoutes);
 
 app.post('/sayhello', function (req, res) {
   res.send(`hello ${req.body.user}`);
