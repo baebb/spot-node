@@ -40,11 +40,10 @@ app.get('/', function (req, res) {
 app.get('/test', (req, res) => {
   var command = ffmpeg()
     .input('./img/bunny.mp4')
-    .inputFormat('mp4')
-    .native()
-    .fps(29.7)
-    .videoBitrate('4500k')
-    .videoCodec('libx264')
+    // .inputFormat('mp4')
+    // .native()
+    .fps(15)
+    // .videoCodec('libx264')
     .size('640x360')
     .autopad('black')
     .format('flv')
@@ -52,7 +51,7 @@ app.get('/test', (req, res) => {
     .on('error', (err) => console.log('An error occurred: ' + err.message))
     .on('end', () => console.log('finished processing!'))
     .save('rtmp://live-tyo.twitch.tv:1935/app/live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye');
-  res.send('trying streaming');
+  res.send('streaming');
 });
 
 app.use('/cat', catRoutes);
