@@ -2,6 +2,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 
+var ffmpeg = require('fluent-ffmpeg');
+
 // Module Dependencies
 var catRoutes = require('./routes/cat');
 
@@ -30,6 +32,26 @@ app.use((req, res, next) => {
 // reply to request with "Hello World!"
 app.get('/', function (req, res) {
   res.render('index.html');
+});
+
+app.get('/test', (req, res) => {
+  var command = ffmpeg()
+    .input('./img/bunny.mp4')
+    .inputFormat('mp4')
+    .native()
+    .loop()
+    .fps(29.7)
+    .videoBitrate('4500k')
+    .videoCodec('libx264')
+    .size('640x360')
+    .autopad('black')
+    .format('flv')
+    .on('error', (err) => {
+      console.log('An error occurred: ' + err.message);
+    })
+    .on('end', () => console.log('finished processing!'))
+    .pipe('rtmp://live-tyo.twitch.tv/app/live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye', {end:true});
+  res.send('trying streaming');
 });
 
 app.use('/cat', catRoutes);
