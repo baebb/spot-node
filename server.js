@@ -42,7 +42,6 @@ app.get('/test', (req, res) => {
     .input('./img/bunny.mp4')
     .inputFormat('mp4')
     .native()
-    .loop()
     .fps(29.7)
     .videoBitrate('4500k')
     .videoCodec('libx264')
