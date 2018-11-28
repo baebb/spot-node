@@ -13,8 +13,6 @@
     "body-parser": "^1.18.3",
     "ejs": "*",
     "express": "*",
-    "node-webcam": "^0.4.6",
-    "v4l2camera": "*",
     "fluent-ffmpeg": "*"
   }
 }
