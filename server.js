@@ -36,10 +36,13 @@ app.get('/', function (req, res) {
 });
 
 app.get('/test', (req, res) => {
-  var streamURL = fs.createWriteStream('rtmp://live-tyo.twitch.tv:1935/app/live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye');
+  var streamVid = fs.createReadStream('./img/bunny.mp4');
 
-  var command = ffmpeg()
-    .input('./img/bunny.mp4')
+  streamVid.on('error', function(err) {
+    console.log(err);
+  });
+
+  var command = ffmpeg(streamVid)
     .preset('flashvideo')
     // .inputFormat('mp4')
     // .native()
@@ -53,8 +56,7 @@ app.get('/test', (req, res) => {
     .on('start', () => console.log('Started!'))
     .on('error', (err) => console.log('An error occurred: ' + err.message))
     .on('end', () => console.log('finished processing!'))
-    // .save('rtmp://live-tyo.twitch.tv:1935/app/live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye');
-    .pipe(streamURL, { end: true });
+    .save('rtmp://live-tyo.twitch.tv:1935/app/live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye');
   res.send('streaming');
 });
 
