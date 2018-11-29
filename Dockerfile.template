@@ -5,7 +5,7 @@
 FROM resin/%%RESIN_MACHINE_NAME%%-ubuntu-node:9.11-slim
 
 RUN apt-get update && apt-get install -y \
-add-apt-repository ppa:jonathonf/ffmpeg-4 && \
+# add-apt-repository ppa:jonathonf/ffmpeg-4 && \
 v4l-utils ffmpeg && \
 apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -18,7 +18,7 @@ COPY package.json package.json
 # This install npm dependencies on the balena build server,
 # making sure to clean up the artifacts it creates in order to reduce the image size.
 RUN JOBS=MAX npm install --production --unsafe-perm && \
-npm cache clean --force && rm -rf /tmp/* && npm cache verify \
+npm cache clean --force && rm -rf /tmp/* && npm cache verify && \
 npm install -g speed-test speedtest-net
 
 # This will copy all files in our root to the working  directory in the container
