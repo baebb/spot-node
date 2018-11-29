@@ -37,23 +37,24 @@ app.get('/', function (req, res) {
 
 app.get('/test', (req, res) => {
   // var streamVid = fs.createReadStream('./img/bunny.mp4');
-  var streamVid = './img/bunny.mp4';
+  // var streamVid = './img/bunny.mp4';
+  var streamVid = '/dev/video0';
 
   // streamVid.on('error', function(err) {
   //   console.log(err);
   // });
 
   var command = ffmpeg(streamVid)
-    .preset('flashvideo')
-    // .inputFormat('mp4')
+    // .preset('flashvideo')
+    .inputFormat('v4l2')
+    .format('flv')
+    .fps(15)
     // .native()
-    // .fps(15)
     // .withNoAudio()
-    // .videoBitrate('4500k')
-    // .videoCodec('libx264')
-    // .size('640x360')
-    // .autopad('black')
-    // .format('flv')
+    .videoBitrate('4500k')
+    .videoCodec('libx264')
+    .size('640x360')
+    .autopad('black')
     .on('start', () => console.log('Started!'))
     .on('error', (err) => console.log('An error occurred: ' + err.message))
     .on('end', () => console.log('finished processing!'))

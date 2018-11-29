@@ -4,7 +4,7 @@
 # Note the node:slim image doesn't have node-gyp
 FROM resin/%%RESIN_MACHINE_NAME%%-ubuntu-node:9.11-slim
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -yq \
 v4l-utils ffmpeg motion && \
 apt-get clean && rm -rf /var/lib/apt/lists/*
 
