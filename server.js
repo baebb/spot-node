@@ -1,14 +1,15 @@
 // NPM Dependencies
-var express = require('express');
-var bodyParser = require('body-parser');
-var ffmpeg = require('fluent-ffmpeg');
-var fs = require('fs');
-
+const express = require('express');
+const bodyParser = require('body-parser');
+const ffmpeg = require('fluent-ffmpeg');
+const storage = require('node-persist');
 
 // Module Dependencies
-var catRoutes = require('./routes/cat');
+const catRoutes = require('./routes/cat');
 
-var app = express();
+const app = express();
+// await storage.init();
+let stream;
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,35 +36,41 @@ app.get('/', function (req, res) {
   res.render('index.html');
 });
 
-app.get('/test', (req, res) => {
+app.get('/stream-start', (req, res) => {
   // var streamVid = fs.createReadStream('./img/bunny.mp4');
   // var streamVid = './img/bunny.mp4';
-  var streamVid = '/dev/video0';
+  const streamVid = '/dev/video0';
 
   // streamVid.on('error', function(err) {
   //   console.log(err);
   // });
 
-  var command = ffmpeg(streamVid)
+  stream = ffmpeg(streamVid)
     .inputFormat('v4l2')
-    .native()
-    .size('640x360')
-    .fps(30)
     .videoCodec('libx264')
-    .videoBitrate('2000k')
     .outputOptions([
+      '-s 640x360',
+      '-r 30',
       '-g 60',
       '-pix_fmt yuv420p',
-      '-crf 23'
+      '-crf 23',
+      '-b:v 2M',
+      '-maxrate 2M',
+      '-bufsize 1M'
     ])
     .noAudio()
     .flvmeta()
     .format('flv')
-    .save('rtmp://live-tyo.twitch.tv:1935/app/live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye')
+    .save('rtmp://live-tyo.twitch.tv/app/live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye')
     .on('start', () => console.log('Started!'))
     .on('error', (err) => console.log('An error occurred: ' + err.message))
     .on('end', () => console.log('finished processing!'));
-  res.send('streaming');
+  res.send('stream started');
+});
+
+app.get('/stream-stop', (req, res) => {
+  stream.kill();
+  res.send('stream stopped');
 });
 
 app.use('/cat', catRoutes);

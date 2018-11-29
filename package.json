@@ -16,6 +16,7 @@
     "express": "*",
     "fluent-ffmpeg": "*",
     "fs": "0.0.1-security",
+    "node-persist": "^3.0.1",
     "speedtest-net": "^1.4.3"
   }
 }
