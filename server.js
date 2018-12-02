@@ -2,14 +2,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const ffmpeg = require('fluent-ffmpeg');
-const storage = require('node-persist');
+const shell = require('shelljs');
 
 // Module Dependencies
 const catRoutes = require('./routes/cat');
 
+// Constants
+const streamKey = 'live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye';
+const twitchURL = `rtmp://live-tyo.twitch.tv/app/${streamKey}`;
+
 const app = express();
-// await storage.init();
-let stream;
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -37,39 +39,42 @@ app.get('/', function (req, res) {
 });
 
 app.get('/stream-start', (req, res) => {
-  // var streamVid = fs.createReadStream('./img/bunny.mp4');
-  // var streamVid = './img/bunny.mp4';
   const streamVid = '/dev/video0';
 
-  // streamVid.on('error', function(err) {
-  //   console.log(err);
-  // });
+  shell.exec(`ffmpeg -f v4l2 -i ${streamVid} -pix_fmt yuv420p -vcodec libx264 -s 640x360 -r 30 -g 60 -crf 23 -preset veryfast -b:v 2M -maxrate 2M -bufsize 1M -threads 6 -f flv ${twitchURL}`,
+    { shell: '/bin/bash' },
+    (code, stdout, stderr) => {
+    console.log('Exit code:', code);
+    console.log('Program output:', stdout);
+    console.log('Program stderr:', stderr);
+  });
 
-  stream = ffmpeg(streamVid)
-    .inputFormat('v4l2')
-    .videoCodec('libx264')
-    .outputOptions([
-      '-s 640x360',
-      '-r 30',
-      '-g 60',
-      '-pix_fmt yuv420p',
-      '-crf 23',
-      '-b:v 2M',
-      '-maxrate 2M',
-      '-bufsize 1M'
-    ])
-    .noAudio()
-    .flvmeta()
-    .format('flv')
-    .save('rtmp://live-tyo.twitch.tv/app/live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye')
-    .on('start', () => console.log('Started!'))
-    .on('error', (err) => console.log('An error occurred: ' + err.message))
-    .on('end', () => console.log('finished processing!'));
+  // stream = ffmpeg(streamVid)
+  //   .inputFormat('v4l2')
+  //   .videoCodec('libx264')
+  //   .outputOptions([
+  //     '-s 640x360',
+  //     '-r 30',
+  //     '-g 60',
+  //     '-pix_fmt yuv420p',
+  //     '-crf 23',
+  //     '-b:v 2M',
+  //     '-maxrate 2M',
+  //     '-bufsize 1M'
+  //   ])
+  //   .noAudio()
+  //   .flvmeta()
+  //   .format('flv')
+  //   .save('rtmp://live-tyo.twitch.tv/app/live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye')
+  //   .on('start', () => console.log('Started!'))
+  //   .on('error', (err) => console.log('An error occurred: ' + err.message))
+  //   .on('end', () => console.log('finished processing!'));
   res.send('stream started');
 });
 
 app.get('/stream-stop', (req, res) => {
-  stream.kill();
+  // stream.kill();
+  shell.exec('pkill ffmpeg', { shell: '/bin/bash' });
   res.send('stream stopped');
 });
 

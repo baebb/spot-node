@@ -17,6 +17,7 @@
     "fluent-ffmpeg": "*",
     "fs": "0.0.1-security",
     "node-persist": "^3.0.1",
+    "shelljs": "^0.8.3",
     "speedtest-net": "^1.4.3"
   }
 }
