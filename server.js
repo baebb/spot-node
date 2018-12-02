@@ -40,12 +40,13 @@ app.get('/', function (req, res) {
 app.get('/stream-start', (req, res) => {
   const streamVid = '/dev/video0';
 
-  shell.exec(`ffmpeg -f v4l2 -i ${streamVid} -pix_fmt yuv420p -vcodec libx264 -s 640x360 -r 30 -g 60 -crf 23 -preset veryfast -b:v 2M -maxrate 2M -bufsize 1M -threads 6 -f flv ${twitchURL}`,
+  shell.exec(`ffmpeg -f v4l2 -i ${streamVid} -pix_fmt yuv420p -vcodec libx264 -s 640x360 -r 30 -g 60 -crf 23 -preset veryfast -b:v 2M -maxrate 2M -bufsize 1M -threads 6 -f flv ${twitchURL} -loglevel panic`,
     { shell: '/bin/bash' },
     (code, stdout, stderr) => {
-    console.log('Exit code:', code);
-    console.log('Program stderr:', stderr);
-  });
+      console.log('Exit code:', code);
+      console.log('Program stdout:', stdout);
+      console.log('Program stderr:', stderr);
+    });
 
   res.send('stream started');
 });
