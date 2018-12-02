@@ -10,13 +10,9 @@
   "author": "Ross Dyson",
   "license": "Apache-2.0",
   "dependencies": {
-    "@ffmpeg-installer/ffmpeg": "^1.0.16",
     "body-parser": "^1.18.3",
     "ejs": "*",
     "express": "*",
-    "fluent-ffmpeg": "*",
-    "fs": "0.0.1-security",
-    "node-persist": "^3.0.1",
     "shelljs": "^0.8.3",
     "speedtest-net": "^1.4.3"
   }

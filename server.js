@@ -1,7 +1,6 @@
 // NPM Dependencies
 const express = require('express');
 const bodyParser = require('body-parser');
-const ffmpeg = require('fluent-ffmpeg');
 const shell = require('shelljs');
 
 // Module Dependencies
@@ -45,36 +44,15 @@ app.get('/stream-start', (req, res) => {
     { shell: '/bin/bash' },
     (code, stdout, stderr) => {
     console.log('Exit code:', code);
-    console.log('Program output:', stdout);
     console.log('Program stderr:', stderr);
   });
 
-  // stream = ffmpeg(streamVid)
-  //   .inputFormat('v4l2')
-  //   .videoCodec('libx264')
-  //   .outputOptions([
-  //     '-s 640x360',
-  //     '-r 30',
-  //     '-g 60',
-  //     '-pix_fmt yuv420p',
-  //     '-crf 23',
-  //     '-b:v 2M',
-  //     '-maxrate 2M',
-  //     '-bufsize 1M'
-  //   ])
-  //   .noAudio()
-  //   .flvmeta()
-  //   .format('flv')
-  //   .save('rtmp://live-tyo.twitch.tv/app/live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye')
-  //   .on('start', () => console.log('Started!'))
-  //   .on('error', (err) => console.log('An error occurred: ' + err.message))
-  //   .on('end', () => console.log('finished processing!'));
   res.send('stream started');
 });
 
 app.get('/stream-stop', (req, res) => {
-  // stream.kill();
   shell.exec('pkill ffmpeg', { shell: '/bin/bash' });
+
   res.send('stream stopped');
 });
 
