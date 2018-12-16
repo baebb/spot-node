@@ -5,7 +5,7 @@
 FROM resin/%%RESIN_MACHINE_NAME%%-ubuntu-node:9.11-slim
 
 RUN apt-get update && apt-get install -yq \
-python3.6 python3-time python3-sys python3-pip python3-pyserial \
+python3.6 \
 v4l-utils ffmpeg sysstat flvmeta && \
 apt-get clean && rm -rf /var/lib/apt/lists/*
 
