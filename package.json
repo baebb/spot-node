@@ -13,6 +13,8 @@
     "body-parser": "^1.18.3",
     "ejs": "*",
     "express": "*",
+    "pubnub": "^4.21.6",
+    "serialport": "^7.1.0",
     "shelljs": "^0.8.3",
     "speedtest-net": "^1.4.3"
   }
