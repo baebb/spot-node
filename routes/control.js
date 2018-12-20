@@ -18,11 +18,11 @@ router
     res.send(`listening to ${channel}`)
   })
   .get('/end', (req, res) => {
-    const { channel } = req.query;
+    // const { channel } = req.query;
 
     disconnect();
 
-    res.send(`disconnecting form ${channel}`)
+    res.send(`disconnecting`)
   });
 
 module.exports = router;

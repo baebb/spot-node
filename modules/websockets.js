@@ -10,10 +10,12 @@ const pubnub = new PubNub({
 
 pubnub.addListener({
   status: (statusEvent) => {
-    switch (statusEvent.category) {
-      case 'PNConnectedCategory':
+    const { operation, category } = statusEvent;
+
+    switch (true) {
+      case (category === 'PNConnectedCategory'):
         return console.log(`connected to ${statusEvent.affectedChannels}`);
-      case 'PNUnsubscribeOperation':
+      case (operation === 'PNUnsubscribeOperation'):
         return console.log(`disconnected from ${statusEvent.affectedChannels}`);
       default:
         return console.log('something else', statusEvent);
