@@ -1,7 +1,7 @@
 // NPM Dependencies
 const PubNub = require('pubnub');
 
-const { controller } = ('./controller');
+const { controller } = require('./controller');
 
 const pubnub = new PubNub({
   subscribeKey: 'sub-c-3e91234c-012f-11e9-a399-32ec39b2e34f',
