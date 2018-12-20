@@ -2,7 +2,7 @@
 var express = require('express');
 
 // Module Dependencies
-import { connect, disconnect } from "../modules/websockets";
+const { connect, disconnect } = require('../modules/websockets');
 
 router = express.Router();
 

@@ -19,13 +19,13 @@ pubnub.addListener({
   }
 });
 
-export const connect = channel => {
+exports.connect = channel => {
   console.log(`connecting to ${channel}`);
   pubnub.subscribe({
     channels: [channel]
   });
 };
 
-export const disconnect = () => {
+exports.disconnect = () => {
   pubnub.unsubscribeAll();
 };
