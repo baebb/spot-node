@@ -5,6 +5,7 @@ const shell = require('shelljs');
 
 // Module Dependencies
 const catRoutes = require('./routes/cat');
+const controlRoutes = require('./routes/control');
 
 // Constants
 const streamKey = 'live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye';
@@ -56,6 +57,8 @@ app.get('/stream-stop', (req, res) => {
 
   res.send('stream stopped');
 });
+
+app.use('/control', controlRoutes);
 
 app.use('/cat', catRoutes);
 
