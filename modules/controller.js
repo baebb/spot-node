@@ -6,7 +6,7 @@
 // const parser = new Readline();
 // port.pipe(parser);
 
-parser.on('data', line => console.log(`> ${line}`));
+// parser.on('data', line => console.log(`> ${line}`));
 
 const controlKey = (control) => {
   switch(control) {
