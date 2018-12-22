@@ -14,9 +14,9 @@ pubnub.addListener({
 
     switch (true) {
       case (category === 'PNConnectedCategory'):
-        return console.log(`connected to ${statusEvent.affectedChannels}`);
+        return console.log(`connected to channel ${statusEvent.affectedChannels}`);
       case (operation === 'PNUnsubscribeOperation'):
-        return console.log(`disconnected from ${statusEvent.affectedChannels}`);
+        return console.log(`disconnected from channel ${statusEvent.affectedChannels}`);
       default:
         return console.log('something else', statusEvent);
     }
@@ -29,7 +29,7 @@ pubnub.addListener({
 });
 
 exports.connect = channel => {
-  console.log(`connecting to ${channel}`);
+  console.log(`connecting to channel ${channel}`);
   pubnub.subscribe({
     channels: [channel]
   });

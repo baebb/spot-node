@@ -1,7 +1,7 @@
 // NPM Dependencies
 const SerialPort = require('serialport');
 
-const port = new SerialPort('/dev/ttyACM0', (error) => console.log('Error: ', error));
+const port = new SerialPort('/dev/ttyACM0', (error) => error && console.log('Error on port: ', error));
 
 const controlKey = (control) => {
   switch(control) {
@@ -21,14 +21,14 @@ const controlKey = (control) => {
 };
 
 const writeToPort = (control) => {
-  port.write(control, (error) => console.log('Error: ', error));
+  port.write(control, (error) => error && console.log('Error on write: ', error));
 };
 
 exports.controller = (control) => {
   const command = controlKey(control);
 
   if (command) {
-    console.log(`I would move ${control} now`);
+    console.log(`Command: ${control}`);
     writeToPort(command);
   }
 };

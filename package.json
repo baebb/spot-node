@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "DEBUG=serialport/* node server.js"
+    "start": "node server.js"
   },
   "author": "Ross Dyson <me@rossdyson.com>",
   "license": "Apache-2.0",
