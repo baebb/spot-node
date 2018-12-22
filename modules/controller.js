@@ -1,12 +1,7 @@
 // NPM Dependencies
-// const SerialPort = require('serialport');
-// const Readline = require('@serialport/parser-readline');
-//
-// const port = new SerialPort(path, { baudRate: 256000 });
-// const parser = new Readline();
-// port.pipe(parser);
+const SerialPort = require('serialport');
 
-// parser.on('data', line => console.log(`> ${line}`));
+const port = new SerialPort('/dev/ttyACM0', (error) => console.log('Error: ', error));
 
 const controlKey = (control) => {
   switch(control) {
@@ -25,11 +20,15 @@ const controlKey = (control) => {
   }
 };
 
-exports.controller = (control) => {
-  console.log(`I would move ${control} now`);
-  const executeControl = controlKey(control);
+const writeToPort = (control) => {
+  port.write(control, (error) => console.log('Error: ', error));
+};
 
-  if (executeControl) {
-    // port.write(executeControl);
+exports.controller = (control) => {
+  const command = controlKey(control);
+
+  if (command) {
+    console.log(`I would move ${control} now`);
+    writeToPort(command);
   }
 };
