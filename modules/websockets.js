@@ -21,9 +21,17 @@ pubnub.addListener({
         return console.log('something else', statusEvent);
     }
   },
+  presence: function(presence) {
+    const { action } = presence;
+    console.log('action: ', action);
+    console.log('whole object: ', presence);
+  },
   message: (msg) => {
     if (msg.channel === 'controls') {
-      controller(msg.message.control);
+      const { message, publisher } = msg;
+      const { control } = message;
+
+      controller({ control, publisher });
     }
   }
 });
@@ -31,7 +39,8 @@ pubnub.addListener({
 exports.connect = channel => {
   console.log(`connecting to channel ${channel}`);
   pubnub.subscribe({
-    channels: [channel]
+    channels: [channel],
+    withPresence: true
   });
 };
 
