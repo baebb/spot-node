@@ -24,7 +24,7 @@ const writeToPort = (control) => {
   port.write(control, (error) => error && console.log('Error on write: ', error));
 };
 
-exports.controller = (control) => {
+exports.controller = ({ control, publisher }) => {
   const command = controlKey(control);
 
   if (command) {
