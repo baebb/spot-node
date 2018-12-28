@@ -28,7 +28,7 @@ exports.controller = ({ control, publisher }) => {
   const command = controlKey(control);
 
   if (command) {
-    console.log(`Command: ${control}`);
+    // console.log(`Command: ${control}`);
     writeToPort(command);
   }
 };

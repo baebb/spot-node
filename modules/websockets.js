@@ -23,10 +23,15 @@ pubnub.addListener({
     }
   },
   presence: (presence) => {
-    const { action } = presence;
-    console.log('new presence');
-    console.log('action: ', action);
-    console.log('whole object: ', presence);
+    const { action, uuid, occupancy } = presence;
+    switch (action) {
+      case 'join':
+        return console.log(`user join: ${uuid}`, `current usercount: ${occupancy}`);
+      case 'leave':
+        return console.log(`user left: ${uuid}`, `current usercount: ${occupancy}`);
+      default:
+        return console.log('something else', presence);
+    }
   },
   message: (msg) => {
     if (msg.channel === 'controls') {
