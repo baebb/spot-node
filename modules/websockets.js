@@ -5,7 +5,8 @@ const { controller } = require('./controller');
 
 const pubnub = new PubNub({
   subscribeKey: 'sub-c-3e91234c-012f-11e9-a399-32ec39b2e34f',
-  publishKey: 'pub-c-86d77efa-af69-435d-bd9d-d9e25341436f'
+  publishKey: 'pub-c-86d77efa-af69-435d-bd9d-d9e25341436f',
+  uuid: 'droneboi'
 });
 
 pubnub.addListener({
@@ -21,8 +22,9 @@ pubnub.addListener({
         return console.log('something else', statusEvent);
     }
   },
-  presence: function(presence) {
+  presence: (presence) => {
     const { action } = presence;
+    console.log('new presence');
     console.log('action: ', action);
     console.log('whole object: ', presence);
   },
