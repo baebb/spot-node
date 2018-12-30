@@ -15,12 +15,13 @@ router
     const { channel = 'controls' } = req.query;
 
     connect(channel);
+
     shell.exec('motion start',
     { shell: '/bin/bash' },
     (code, stdout, stderr) => {
       console.log('Exit code:', code);
-      console.log('Program stdout:', stdout);
-      console.log('Program stderr:', stderr);
+      console.log('stdout:', stdout);
+      console.log('stderr:', stderr);
     });
 
     res.send(`listening to ${channel}`)
@@ -29,6 +30,14 @@ router
     // const { channel } = req.query;
 
     disconnect();
+
+    shell.exec('pkill motion',
+      { shell: '/bin/bash' },
+      (code, stdout, stderr) => {
+        console.log('Exit code:', code);
+        console.log('stdout:', stdout);
+        console.log('stderr:', stderr);
+      });
 
     res.send(`disconnecting`)
   });
