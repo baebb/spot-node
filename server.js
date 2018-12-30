@@ -1,15 +1,14 @@
 // NPM Dependencies
 const express = require('express');
 const bodyParser = require('body-parser');
-const shell = require('shelljs');
 
 // Module Dependencies
 const catRoutes = require('./routes/cat');
 const controlRoutes = require('./routes/control');
 
 // Constants
-const streamKey = 'live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye';
-const twitchURL = `rtmp://live-tyo.twitch.tv/app/${streamKey}`;
+// const streamKey = 'live_63226783_QfZTjfEHLn35A8nf5Tu0T6RRx1WYye';
+// const twitchURL = `rtmp://live-tyo.twitch.tv/app/${streamKey}`;
 
 const app = express();
 
@@ -38,25 +37,25 @@ app.get('/', function (req, res) {
   res.render('index.html');
 });
 
-app.get('/stream-start', (req, res) => {
-  const streamVid = '/dev/video0';
-
-  shell.exec(`ffmpeg -f v4l2 -i ${streamVid} -pix_fmt yuv420p -vcodec libx264 -s 640x360 -r 30 -g 60 -crf 23 -preset veryfast -b:v 2M -maxrate 2M -bufsize 1M -threads 6 -f flv ${twitchURL} -loglevel panic`,
-    { shell: '/bin/bash' },
-    (code, stdout, stderr) => {
-      console.log('Exit code:', code);
-      console.log('Program stdout:', stdout);
-      console.log('Program stderr:', stderr);
-    });
-
-  res.send('stream started');
-});
-
-app.get('/stream-stop', (req, res) => {
-  shell.exec('pkill ffmpeg', { shell: '/bin/bash' });
-
-  res.send('stream stopped');
-});
+// app.get('/stream-start', (req, res) => {
+//   const streamVid = '/dev/video0';
+//
+//   shell.exec(`ffmpeg -f v4l2 -i ${streamVid} -pix_fmt yuv420p -vcodec libx264 -s 640x360 -r 30 -g 60 -crf 23 -preset veryfast -b:v 2M -maxrate 2M -bufsize 1M -threads 6 -f flv ${twitchURL} -loglevel panic`,
+//     { shell: '/bin/bash' },
+//     (code, stdout, stderr) => {
+//       console.log('Exit code:', code);
+//       console.log('Program stdout:', stdout);
+//       console.log('Program stderr:', stderr);
+//     });
+//
+//   res.send('stream started');
+// });
+//
+// app.get('/stream-stop', (req, res) => {
+//   shell.exec('pkill ffmpeg', { shell: '/bin/bash' });
+//
+//   res.send('stream stopped');
+// });
 
 app.use('/control', controlRoutes);
 
